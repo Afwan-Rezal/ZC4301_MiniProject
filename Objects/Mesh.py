@@ -1,10 +1,12 @@
 from OpenGL.GL import *
 import pygame
 
+
 class Rotation:
     def __init__(self, angle, axis):
         self.angle = angle
         self.axis = axis
+
 
 class Mesh:
     def __init__(self, vertices, triangles, draw_type, translation, rotation, scale):

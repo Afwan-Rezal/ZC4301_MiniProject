@@ -1,10 +1,6 @@
-import pygame
 from pygame.locals import *
-from OpenGL.GL import *
-from OpenGL.GLU import *
-from Cube import *
-from LoadMesh import *
-from Camera import *
+from Utilities.LoadMesh import *
+from Utilities.Camera import *
 
 import os
 
@@ -23,14 +19,8 @@ drawing_color = (1, 1, 1, 1)
 screen = pygame.display.set_mode((screen_width, screen_height), DOUBLEBUF | OPENGL)
 pygame.display.set_caption('OpenGL in Python')
 
-cube = Cube(
-    GL_LINE_LOOP,
-    position=pygame.Vector3(2, 0, 0),
-    rotation=Rotation(45,pygame.Vector3(0, 1, 0)),
-    scale=pygame.Vector3(0.5, 0.5, 0.5)
-)
-
-mesh = LoadMesh("Objects/cube.obj", GL_LINE_LOOP)
+mesh1 = LoadMesh("Objects/cube.obj", GL_LINE_LOOP)
+mesh2 = LoadMesh("Objects/cube.obj", GL_LINE_LOOP)
 camera = Camera()
 
 
@@ -98,17 +88,18 @@ def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     camera_init()
     draw_world_axes()
-    cube.draw()
-    # cube2.draw()
 
-    # glRotate(45, 0, 1, 0)
-    # glTranslated(2, 0, 0)
-    # cube.draw(pygame.Vector3(0, 0, 0))
+    # Draw mesh1 with scaling
+    glPushMatrix()
+    glScalef(1.0, 1.0, 1.5)  # Scale mesh1 to be longer
+    mesh1.draw()
+    glPopMatrix()
 
-    # for z in range(10):
-    #     for x in range(10):
-    #         cube.draw(pygame.Vector3(x, 0.5, z))
-    # mesh.draw()
+    # Draw mesh2 without scaling
+    glPushMatrix()
+    glTranslatef(0, 4.0, 0)  # Adjust '2.0' as needed to control the stacking height
+    mesh2.draw()
+    glPopMatrix()
 
 
 done = False
