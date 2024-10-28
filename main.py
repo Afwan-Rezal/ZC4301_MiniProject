@@ -19,9 +19,33 @@ drawing_color = (1, 1, 1, 1)
 screen = pygame.display.set_mode((screen_width, screen_height), DOUBLEBUF | OPENGL)
 pygame.display.set_caption('OpenGL in Python')
 
-mesh1 = LoadMesh("Objects/cube.obj", GL_LINE_LOOP)
-mesh2 = LoadMesh("Objects/cube.obj", GL_LINE_LOOP)
 camera = Camera()
+
+cubeMesh = LoadMesh("Objects/cube.obj", GL_LINE_LOOP)
+domeMesh = LoadMesh("Objects/dome.obj", GL_LINE_LOOP)
+
+# BIBD Frames Objects
+leftFrame = cubeMesh
+rightFrame = cubeMesh
+topFrame = cubeMesh
+botFrame = cubeMesh
+
+# Mosque Objects
+pillar1 = cubeMesh
+pillar2 = cubeMesh
+pillar3 = cubeMesh
+pillar4 = cubeMesh
+longPillar = cubeMesh
+smallBlock = cubeMesh
+bigBlock = cubeMesh
+mainBlock = cubeMesh
+
+pilDom1 = domeMesh
+pilDom2 = domeMesh
+pilDom3 = domeMesh
+pilDom4 = domeMesh
+longPilDom = domeMesh
+mainDom = domeMesh
 
 
 def initialise():
@@ -46,15 +70,19 @@ def camera_init():
 def draw_world_axes():
     glLineWidth(4)
     glBegin(GL_LINES)
+
     glColor(1, 0, 0)
     glVertex3d(-1000, 0, 0)
     glVertex3d(1000, 0, 0)
+
     glColor(0, 1, 0)
     glVertex3d(0, -1000, 0)
     glVertex3d(0, 1000, 0)
+
     glColor(0, 0, 1)
     glVertex3d(0, 0, -1000)
     glVertex3d(0, 0, 1000)
+
     glEnd()
 
     sphere = gluNewQuadric()
@@ -84,21 +112,50 @@ def draw_world_axes():
     glColor(1, 1, 1)
 
 
+# Building Blocks
+
+def draw_frames():
+    # Left Frame
+    glPushMatrix()
+    glTranslatef(-8.0, 5.5, 0)  # Corrected position for the left frame (negative X)
+    glScalef(1.0, 11.0, 1.0)
+    leftFrame.draw()
+    glPopMatrix()
+
+    # Right Frame
+    glPushMatrix()
+    glTranslatef(8.0, 5.5, 0)  # Corrected position for the right frame (positive X)
+    glScalef(1.0, 11.0, 1.0)
+    rightFrame.draw()
+    glPopMatrix()
+
+    # Top Frame
+    glPushMatrix()
+    glTranslatef(0, 10.5, 0)  # Position for the top frame (positive Y)
+    glScalef(15.0, 1.0, 1.0)
+    topFrame.draw()
+    glPopMatrix()
+
+    # Bottom Frame
+    glPushMatrix()
+    glTranslatef(0, 0.5, 0)  # Position for the bottom frame
+    glScalef(15.0, 1.0, 1.0)
+    botFrame.draw()
+    glPopMatrix()
+
+
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     camera_init()
     draw_world_axes()
 
-    # Draw mesh1 with scaling
-    glPushMatrix()
-    glScalef(1.0, 1.0, 1.5)  # Scale mesh1 to be longer
-    mesh1.draw()
-    glPopMatrix()
+    # Drawing the Frames
+    draw_frames()
 
     # Draw mesh2 without scaling
     glPushMatrix()
     glTranslatef(0, 4.0, 0)  # Adjust '2.0' as needed to control the stacking height
-    mesh2.draw()
+    # mesh2.draw()
     glPopMatrix()
 
 
