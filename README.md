@@ -2,6 +2,10 @@
 This is the source code for the project of 
 SDS UBD module, ZC-4301 - Computer Graphics.
 
+> Disclaimer:
+>
+> This repo will be made public until 2024/12/01 (1st December 2024), and is used as reference only.
+
 > Instructions for this project can be found 
 > in the [Instructions Markdown File](Documentation/Instructions.md).
 
