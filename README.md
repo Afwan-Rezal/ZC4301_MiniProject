@@ -1,6 +1,6 @@
 # Introduction
 This is the source code for the project of 
-SDS UBD module, ZC-4301 - Computer Graphics.
+SDS-UBD module, ZC-4301 - Computer Graphics.
 
 > Disclaimer:
 >
@@ -13,3 +13,7 @@ SDS UBD module, ZC-4301 - Computer Graphics.
 The topic chosen for this project is **Topic 1: Virtual Bruneian Landmark Tour**,
 with chosen landmark being the BIBD Frame Brunei Darussalam, located in *Eco Corridor Park
 / Taman Mahkota Jubli Emas*. 
+
+The inspiration for this graphical design is based on the photo below:
+![Picture of BIBD Frame, showcasing Masjid SOAS](Documentation/media/bibd_frame.jpg)
+Picture 01: Inspiration Picture
