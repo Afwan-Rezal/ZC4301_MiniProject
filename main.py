@@ -21,31 +21,13 @@ pygame.display.set_caption('OpenGL in Python')
 
 camera = Camera()
 
-cubeMesh = LoadMesh("Objects/cube.obj", GL_LINE_LOOP)
-domeMesh = LoadMesh("Objects/dome.obj", GL_LINE_LOOP)
+cubeMesh = LoadMesh("Objects/cube.obj", GL_TRIANGLES)
+domeMesh = LoadMesh("Objects/dome.obj", GL_TRIANGLES)
 
-# BIBD Frames Objects
-leftFrame = cubeMesh
-rightFrame = cubeMesh
-topFrame = cubeMesh
-botFrame = cubeMesh
-
-# Mosque Objects
-pillar1 = cubeMesh
-pillar2 = cubeMesh
-pillar3 = cubeMesh
-pillar4 = cubeMesh
-longPillar = cubeMesh
-smallBlock = cubeMesh
-bigBlock = cubeMesh
-mainBlock = cubeMesh
-
-pilDom1 = domeMesh
-pilDom2 = domeMesh
-pilDom3 = domeMesh
-pilDom4 = domeMesh
-longPilDom = domeMesh
-mainDom = domeMesh
+vertical = cubeMesh
+horizontal = cubeMesh
+block = cubeMesh
+dome = domeMesh
 
 
 def initialise():
@@ -114,34 +96,117 @@ def draw_world_axes():
 
 # Building Blocks
 
-def draw_frames():
-    # Left Frame
-    glPushMatrix()
-    glTranslatef(-8.0, 5.5, 0)  # Corrected position for the left frame (negative X)
-    glScalef(1.0, 11.0, 1.0)
-    leftFrame.draw()
-    glPopMatrix()
-
+def draw_innerFrames():
     # Right Frame
     glPushMatrix()
-    glTranslatef(8.0, 5.5, 0)  # Corrected position for the right frame (positive X)
-    glScalef(1.0, 11.0, 1.0)
-    rightFrame.draw()
+    glColor3f(1.0, 0.84, 0.0)
+    glTranslatef(-7.5, 6.0, 0)
+    glScalef(1, 11.0, 0.65)
+    vertical.draw()
+    glPopMatrix()
+
+    # Left Frame
+    glPushMatrix()
+    glColor3f(1.0, 0.84, 0.0)
+    glTranslatef(7.5, 6.0, 0)
+    glScalef(1, 11.0, 0.65)
+    vertical.draw()
     glPopMatrix()
 
     # Top Frame
     glPushMatrix()
-    glTranslatef(0, 10.5, 0)  # Position for the top frame (positive Y)
-    glScalef(15.0, 1.0, 1.0)
-    topFrame.draw()
+    glColor3f(1.0, 0.84, 0.0)
+    glTranslatef(0, 10.5, 0)
+    glScalef(15.0, 1.0, 0.65)
+    horizontal.draw()
     glPopMatrix()
 
     # Bottom Frame
     glPushMatrix()
-    glTranslatef(0, 0.5, 0)  # Position for the bottom frame
-    glScalef(15.0, 1.0, 1.0)
-    botFrame.draw()
+    glColor3f(1.0, 0.84, 0.0)
+    glTranslatef(0, 1.5, 0)
+    glScalef(15.0, 1.0, 0.65)
+    horizontal.draw()
     glPopMatrix()
+
+
+def draw_outerFrames():
+    # Right Frame
+    glPushMatrix()
+    glColor3f(1.0, 1.0, 1.0)
+    glTranslatef(-8.0, 6.0, 0)
+    glScalef(1, 12.2, 1.0)
+    vertical.draw()
+    glPopMatrix()
+
+    # Left Frame
+    glPushMatrix()
+    glColor3f(1.0, 1.0, 1.0)
+    glTranslatef(8.0, 6.0, 0)
+    glScalef(1, 12.2, 1.0)
+    vertical.draw()
+    glPopMatrix()
+
+    # Top Frame
+    glPushMatrix()
+    glColor3f(1.0, 1.0, 1.0)
+    glTranslatef(0, 11.5, 0)
+    glScalef(15.0, 1.2, 1.0)
+    horizontal.draw()
+    glPopMatrix()
+
+    # Bottom Frame
+    glPushMatrix()
+    glColor3f(1.0, 1.0, 1.0)
+    glTranslatef(0, 0.5, 0)
+    glScalef(15.0, 1.2, 1.0)
+    horizontal.draw()
+    glPopMatrix()
+
+
+def draw_mosque():
+
+    # Layer 1: Block and pillars
+
+    # Right-Front Pillar
+    glPushMatrix()
+    glColor3f(1, 1, 1)
+    glTranslatef(-8.0, 5.5, 100)
+    glScalef(1.0, 11.0, 1.0)
+    vertical.draw()
+    glPopMatrix()
+
+    glPushMatrix()
+    glColor3f(1.0, 0.84, 0.0)
+    glTranslatef(-8.0, 11.0, 100)
+    glRotate(270, 1, 0, 0)
+    dome.draw()
+    glPopMatrix()
+
+    # Left-Front Pillar
+    glPushMatrix()
+    glColor3f(1, 1, 1)
+    glTranslatef(8.0, 5.5, 100)
+    glScalef(1.0, 11.0, 1.0)
+    vertical.draw()
+    glPopMatrix()
+
+    glPushMatrix()
+    glColor3f(1.0, 0.84, 0.0)
+    glTranslatef(8.0, 11.0, 100)
+    glRotate(270, 1, 0, 0)
+    dome.draw()
+    glPopMatrix()
+
+    # Block
+    glPushMatrix()
+    glColor3f(1.0, 1.0, 1.0)
+    glTranslatef(0, 5, 105)
+    glScalef(15, 9.5, 10.5)
+    vertical.draw()
+    glPopMatrix()
+
+
 
 
 def display():
@@ -150,13 +215,10 @@ def display():
     draw_world_axes()
 
     # Drawing the Frames
-    draw_frames()
+    draw_innerFrames()
+    draw_outerFrames()
 
-    # Draw mesh2 without scaling
-    glPushMatrix()
-    glTranslatef(0, 4.0, 0)  # Adjust '2.0' as needed to control the stacking height
-    # mesh2.draw()
-    glPopMatrix()
+    draw_mosque()
 
 
 done = False
